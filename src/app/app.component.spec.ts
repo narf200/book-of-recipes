@@ -1,11 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { ShoppingListComponent } from './list/shoppingList/shoppingList.component';
+import { ShoppingEditComponent } from './list/shoppingEdit/shoppingEdit.component';
+import { RecipeItemComponent } from './recipes/recipeList/recipeItem/recipeItem.component';
+import { RecipeDetailComponent } from './recipes/recipeDetail/recipeDetail.component';
+import { RecipeListComponent } from './recipes/recipeList/recipeList.component';
+import { RecipesComponent } from './recipes/recipes.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent,
+        ShoppingListComponent,
+        ShoppingEditComponent,
+        RecipeItemComponent,
+        RecipeDetailComponent,
+        RecipeListComponent,
+        RecipesComponent,
       ],
     }).compileComponents();
   });
@@ -26,6 +40,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('book-of-recipes app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain(
+      'book-of-recipes app is running!'
+    );
   });
 });

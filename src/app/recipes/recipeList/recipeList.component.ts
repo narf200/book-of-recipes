@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -7,9 +14,14 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['recipeList.component.css'],
 })
 export class RecipeListComponent implements OnInit {
-  recipeName: string = '';
-  recipeDescription: string = '';
-  recipeImagePath: string = '';
+  // recipeName: string = '';
+  // recipeDescription: string = '';
+  // recipeImagePath: string = '';
+  @Output() recipeTranseeted = new EventEmitter<Recipe>();
+
+  @ViewChild('recipeNameInput') recipeNameInput: ElementRef;
+  @ViewChild('recipeDescription') recipeDescription: ElementRef;
+  @ViewChild('recipeImagePath') recipeImagePath: ElementRef;
 
   recipes: Recipe[] = [
     new Recipe(
@@ -24,15 +36,24 @@ export class RecipeListComponent implements OnInit {
     ),
   ];
 
-  onCreateRecipe() {
+  onCreateRecipe(recipeNameInput, recipeDescription, recipeImagePath) {
     this.recipes.push(
-      new Recipe(this.recipeName, this.recipeDescription, this.recipeImagePath)
+      new Recipe(
+        recipeNameInput.value,
+        recipeDescription.value,
+        recipeImagePath.value
+      )
     );
 
-    this.recipeName = '';
-    this.recipeDescription = '';
-    this.recipeImagePath = '';
+    recipeNameInput.value = '';
+    recipeDescription.value = '';
+    recipeImagePath.value = '';
+
     console.log(this.recipes);
+  }
+
+  onRecipeSelected(recipe: Recipe) {
+    this.recipeTranseeted.emit(recipe);
   }
 
   ngOnInit() {}
