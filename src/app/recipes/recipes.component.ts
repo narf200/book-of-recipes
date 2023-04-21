@@ -1,18 +1,22 @@
-import { Component, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { RecipeService } from './recipe.service';
 import { Recipe } from './recipe.model';
 
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css'],
+  providers: [RecipeService],
 })
-export class RecipesComponent {
-  @Output() recipeForDetail: Array<Recipe> = [];
+export class RecipesComponent implements OnInit {
+  @Input() selectedRecipe: Recipe;
 
-  onRecipeTranseeted(recipe: Recipe) {
-    this.recipeForDetail.length > 0 ? (this.recipeForDetail = []) : null;
-    this.recipeForDetail.push(recipe);
-    console.log(this.recipeForDetail);
-    console.log(this.recipeForDetail[0].name);
+  constructor(private recipeService: RecipeService) {}
+
+  ngOnInit() {
+    this.recipeService.recipeSelected.subscribe((recipe: Recipe) => {
+      this.selectedRecipe = recipe;
+      console.log('this.selectedRecipe', this.selectedRecipe);
+    });
   }
 }
